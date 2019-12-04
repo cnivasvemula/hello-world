@@ -1,0 +1,35 @@
+---
+apiVersion: v1
+kind: Deployment
+metadata:
+  labels:
+    name: javawebapp
+  name: java-controller
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: javawebapp
+    spec:
+      containers:
+      - image: srinivasvemula/simapleimage
+        name: javawebapp
+        ports:
+        - name: javawebapp
+          containerPort: 9090  
+---
+# Node Port Service
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: javawebapp
+  name: javawebapp
+spec:
+  type: NodePort
+  ports:
+    - port: 9090
+      targetPort: 9090
+  selector:
+    name: javawebapp
